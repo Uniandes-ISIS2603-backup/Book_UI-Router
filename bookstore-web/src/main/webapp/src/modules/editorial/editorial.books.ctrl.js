@@ -38,27 +38,6 @@
             this.readOnly = false;
             this.editMode = false;
 
-
-            /* Escucha de evento cuando se selecciona un registro maestro.
-             * args corresponde a currentRecord del controlador padre
-             */
-            function onCreateOrEdit(event, args) {
-                var childName = "books";
-                if (args[ childName ] === undefined) {
-                    args[ childName ] = [];
-                }
-                $scope.records = [];
-                $scope.refId = args.id;
-                if (args.id) {
-                    authorSvc.getBooks(args.id).then(function (response) {
-                        $scope.records = response.data;
-                    }, responseError);
-                }
-            }
-
-            $scope.$on("post-create", onCreateOrEdit);
-            $scope.$on("post-edit", onCreateOrEdit);
-
             this.removeBook = function (index) {
                 authorSvc.removeBook($scope.refId, $scope.records[ index ].id).then(function () {
                     $scope.records.splice(index, 1);
@@ -118,7 +97,6 @@
                     authorSvc.replaceBooks($scope.refId, data).then(function (response) {
                         $scope.records.splice(0, $scope.records.length);
                         $scope.records.push.apply($scope.records, response.data);
-                        $scope.$emit("updateBooks", $scope.records);
                     }, responseError);
                 });
             };

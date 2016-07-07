@@ -62,10 +62,6 @@
             this.readOnly = false;
             this.editMode = false;
 
-            this.changeTab = function (tab) {
-                $scope.tab = tab;
-            };
-
             //Ejemplo alerta
             if($stateParams.aid==null)
             {
@@ -114,12 +110,6 @@
             this.fetchRecords();
             }
 
-            function updateBooks(event, args) {
-                $scope.currentRecord.books = args;
-            }
-            ;
-
-            $scope.$on('updateBooks', updateBooks);
         }]);
 
 })(window.angular);

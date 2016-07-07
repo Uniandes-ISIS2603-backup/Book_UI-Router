@@ -102,7 +102,7 @@
                     $scope.currentRecord = response.data;
                     self.editMode = true;
                     $state.go("editorial.edit", {eid:record.id}, {reload: false}); 
-                    $scope.$broadcast("post-edit", $scope.currentRecord);
+                    //$scope.$broadcast("post-edit", $scope.currentRecord);
                     return response;
                 }, responseError);
             };

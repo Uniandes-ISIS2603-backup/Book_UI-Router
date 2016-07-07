@@ -182,20 +182,6 @@
             this.fetchRecords();
             }
 
-            function updateReview(event, args) {
-                $scope.currentRecord.reviews = args;
-            }
-            ;
-
-
-            function updateAuthors(event, args) {
-                $scope.currentRecord.authors = args;
-            }
-            ;
-
-            $scope.$on('updateReview', updateReview);
-            $scope.$on('updateAuthors', updateAuthors);
-
         }]);
 
     mod.controller("reviewsCtrl", ["$scope", "bookService",'$state', '$stateParams', function ($scope, bookSvc, $state, $stateParams) {
@@ -235,19 +221,6 @@
             //Variables para el controlador
             this.readOnly = false;
             this.editMode = false;
-
-            //Escucha de evento cuando se selecciona un registro maestro
-            function onCreateOrEdit(event, args) {
-                var childName = "reviews";
-                if (args[childName] === undefined) {
-                    args[childName] = [];
-                }
-                $scope.records = args[childName];
-                $scope.refId = args.id;
-            }
-
-            $scope.$on("post-create", onCreateOrEdit);
-            $scope.$on("post-edit", onCreateOrEdit);
 
             //Función para encontrar un registro por ID o CID
             function indexOf(rc) {

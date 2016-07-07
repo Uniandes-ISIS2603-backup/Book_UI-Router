@@ -35,20 +35,6 @@
             this.readOnly = false;
             this.editMode = false;
 
-            /* Escucha de evento cuando se selecciona un registro maestro.
-             * args corresponde a currentRecord del controlador padre
-             */
-            function onCreateOrEdit(event, args) {
-                var childName = "reviews";
-                if (args[childName] === undefined) {
-                    args[childName] = [];
-                }
-                $scope.records = args[childName];
-            }
-
-            $scope.$on("post-create", onCreateOrEdit);
-            $scope.$on("post-edit", onCreateOrEdit);
-
             //Función para encontrar un registro por ID o CID
             function indexOf(rc) {
                 var field = rc.id !== undefined ? 'id' : 'cid';

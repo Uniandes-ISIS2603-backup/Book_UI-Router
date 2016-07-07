@@ -53,21 +53,6 @@
             this.readOnly = false;
             this.editMode = false;
 
-            /* Escucha de evento cuando se selecciona un registro maestro.
-             * args corresponde a currentRecord del controlador padre
-             */
-            function onEdit(event, args) {
-                $scope.refId = args.id;
-                if (args.id) {
-                    $scope.records = [];
-                    prizeSvc.getPrizes(args.id).then(function (response) {
-                        $scope.records = response.data;
-                    }, responseError);
-                }
-            }
-
-            $scope.$on("post-edit", onEdit);
-
             this.createRecord = function () {
                 this.editMode = true;
                 $scope.currentRecord = {};

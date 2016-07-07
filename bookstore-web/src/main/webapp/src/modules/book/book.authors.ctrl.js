@@ -39,21 +39,6 @@
             this.readOnly = false;
             this.editMode = false;
 
-            /* Escucha de evento cuando se selecciona un registro maestro.
-             * args corresponde a currentRecord del controlador padre
-             */
-            function onEdit(event, args) {
-                $scope.refId = args.id;
-                if (args.id) {
-                    $scope.records = [];
-                    bookSvc.getAuthors(args.id).then(function (response) {
-                        $scope.records = response.data;
-                    }, responseError);
-                }
-            }
-
-            $scope.$on("post-edit", onEdit);
-
             this.removeAuthor = function (index) {
                 bookSvc.removeAuthor($scope.refId, $scope.records[ index ].id).then(function () {
                     $scope.records.splice(index, 1);
@@ -113,7 +98,6 @@
                     bookSvc.replaceAuthors($scope.refId, data).then(function (response) {
                         $scope.records.splice(0, $scope.records.length);
                         $scope.records.push.apply($scope.records, response.data);
-                        $scope.$emit("updateAuthors", $scope.records);
                     }, responseError);
                 });
             };
