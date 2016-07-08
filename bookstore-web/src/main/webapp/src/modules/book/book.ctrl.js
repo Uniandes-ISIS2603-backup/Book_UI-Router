@@ -186,7 +186,6 @@
 
     mod.controller("reviewsCtrl", ["$scope", "bookService",'$state', '$stateParams', function ($scope, bookSvc, $state, $stateParams) {
             
-            console.log('reviewsCtrl');
             $scope.currentRecord = {};
             $scope.records = [];
             $scope.refName = "reviews";

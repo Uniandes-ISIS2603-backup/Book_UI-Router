@@ -2,11 +2,16 @@
 
     var mod = ng.module("bookModule");
 
-    mod.controller("reviewsCtrl", ["$scope", "bookService", function ($scope, bookSvc) {
+    mod.controller("reviewsCtrl", ["$scope", "bookService",'$state','$stateParams', function ($scope, bookSvc, $state, $stateParams) {
+                      
             $scope.currentRecord = {};
             $scope.records = [];
             $scope.refName = "reviews";
             $scope.alerts = [];
+            $scope.refId = $stateParams.bid;
+
+            //LLamado al $scope del padre de este estado
+            $scope.records = $scope.$parent.currentRecord.reviews;
 
             //Alertas
             this.closeAlert = function (index) {
@@ -61,7 +66,7 @@
                     $scope.records.splice(idx, 1, rc);
                 } else {
                     rc.cid = -Math.floor(Math.random() * 10000);
-                    $scope.records.push(rc);
+                    $scope.$parent.currentRecord.reviews.push(rc);
                 }
                 this.fetchRecords();
             };
