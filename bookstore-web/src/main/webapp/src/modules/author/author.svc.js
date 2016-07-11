@@ -79,7 +79,7 @@
 
             /**
              * Hace una petición DELETE a /authors/:id/books/:id para remover
-             * un author de un author
+             * un libro de un author
              * @param {number} authorId Identificador de la instancia de book
              * @param {number} bookId Identificador de la instancia de author
              * @returns {promise} promise para leer la respuesta del servidor

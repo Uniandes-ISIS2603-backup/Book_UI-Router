@@ -1,14 +1,14 @@
 (function (ng) {
     var mod = ng.module("authorModule");
 
-    mod.controller("booksCtrl", ["$scope", "bookService", "$modal", "authorService",'$state', '$stateParams', function ($scope, svc, $modal, authorSvc, $state, $stateParams) {
+    mod.controller("booksCtrl", ["$scope", "$modal",'$state', '$stateParams',"$http", "authorContext", "bookContext", function ($scope, $modal, $state, $stateParams, $http, context, bookContext) {
             $scope.currentRecord = {};
             $scope.records = [];
             $scope.refName = "books";
             $scope.alerts = [];
             
             $scope.refId = $stateParams.aid;
-            authorSvc.getBooks($stateParams.aid).then(function (response) 
+            $http.get(context + "/" + $scope.refId + "/books").then(function (response) 
             {$scope.records = response.data;}, responseError);
 
             //Alertas
@@ -39,7 +39,9 @@
             this.editMode = false;
 
             this.removeBook = function (index) {
-                authorSvc.removeBook($scope.refId, $scope.records[ index ].id).then(function () {
+                authorId = $scope.refId;
+                bookId = $scope.records[ index ].id;
+                $http.delete(context + "/" + authorId + "/books/" + bookId).then(function () {
                     $scope.records.splice(index, 1);
                 }, responseError);
             };
@@ -86,7 +88,7 @@
                         }],
                     resolve: {
                         items: function () {
-                            return svc.fetchRecords();
+                            return $http.get(bookContext);
                         },
                         currentItems: function () {
                             return $scope.records;
@@ -94,7 +96,9 @@
                     }
                 });
                 modal.result.then(function (data) {
-                    authorSvc.replaceBooks($scope.refId, data).then(function (response) {
+                    authorId = $scope.refId;
+                    books = data;
+                    $http.put(context + "/" + authorId + "/books", books).then(function (response) {
                         $scope.records.splice(0, $scope.records.length);
                         $scope.records.push.apply($scope.records, response.data);
                     }, responseError);

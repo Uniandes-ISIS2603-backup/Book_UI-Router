@@ -7,10 +7,6 @@
         "authorModule",
         "reviewModule",
         "prizeModule",
-//        "bookMock",
-//        "editorialMock",
-//        "authorMock",
-//        "reviewMock",
         "ngMessages"
     ]);
 
