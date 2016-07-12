@@ -8,36 +8,37 @@
 
     var mod = ng.module("bookModule");
 
-    mod.controller("bookCtrl", ["$scope", "bookService", "editorialService", "authorService", "$modal",'$state', '$stateParams', function ($scope, svc, editorialSvc, authorSvc, $modal, $state, $stateParams) {
+    mod.controller("bookCtrl", ["$scope", "bookService", "editorialService", "authorService", "$modal", '$state', '$stateParams', "$http", "bookContext","editorialContext", function ($scope, svc, editorialSvc, authorSvc, $modal, $state, $stateParams, $http, context, editorialContext) {
             //Se almacenan todas las alertas
-            if($stateParams.bid != null)
-            {     
-                    svc.fetchRecord($stateParams.bid).then(function (response) {
-                    $scope.currentRecord = response.data;});  
-            }
-            else
+            if ($stateParams.bid != null)
             {
-            $scope.alerts = [];
-            $scope.currentRecord = {
-                id: undefined /*Tipo Long. El valor se asigna en el backend*/,
-                name: '' /*Tipo String*/,
-                description: '' /*Tipo String*/,
-                isbn: '' /*Tipo String*/,
-                image: '' /*Tipo String*/,
-                editorial: {} /*Objeto que representa instancia de Editorial*/,
-                reviews: [{/*Colección de registros de Review*/
-                        id: undefined /*Tipo Long. El backend asigna el valor*/,
-                        name: '' /*Tipo String*/,
-                        source: '' /*Tipo String*/,
-                        description: '' /*Tipo String*/
-                    }, {
-                        id: undefined /*Tipo Long. El backend asigna el valor*/,
-                        name: '' /*Tipo String*/,
-                        source: '' /*Tipo String*/,
-                        description: '' /*Tipo String*/
-                    }] /*Colección de registros de Review*/
-            };
-            $scope.records = [];
+                id = $stateParams.bid;
+                $http.get(context + "/" + id).then(function (response) {
+                    $scope.currentRecord = response.data;
+                });
+            } else
+            {
+                $scope.alerts = [];
+                $scope.currentRecord = {
+                    id: undefined /*Tipo Long. El valor se asigna en el backend*/,
+                    name: '' /*Tipo String*/,
+                    description: '' /*Tipo String*/,
+                    isbn: '' /*Tipo String*/,
+                    image: '' /*Tipo String*/,
+                    editorial: {} /*Objeto que representa instancia de Editorial*/,
+                    reviews: [{/*Colección de registros de Review*/
+                            id: undefined /*Tipo Long. El backend asigna el valor*/,
+                            name: '' /*Tipo String*/,
+                            source: '' /*Tipo String*/,
+                            description: '' /*Tipo String*/
+                        }, {
+                            id: undefined /*Tipo Long. El backend asigna el valor*/,
+                            name: '' /*Tipo String*/,
+                            source: '' /*Tipo String*/,
+                            description: '' /*Tipo String*/
+                        }] /*Colección de registros de Review*/
+                };
+                $scope.records = [];
             }
 
             $scope.today = function () {
@@ -92,9 +93,9 @@
             };
 
             //Ejemplo alerta
-            if($stateParams.bid==null)
+            if ($stateParams.bid == null)
             {
-            showMessage("Bienvenido!, Esto es un ejemplo para mostrar un mensaje de información", "info");
+                showMessage("Bienvenido!, Esto es un ejemplo para mostrar un mensaje de información", "info");
             }
 
 
@@ -109,7 +110,6 @@
             this.createRecord = function () {
                 this.editMode = true;
                 $scope.currentRecord = {};
-                $scope.$broadcast("post-create", $scope.currentRecord);
             };
 
             /*
@@ -121,11 +121,11 @@
              */
 
             this.editRecord = function (record) {
-                return svc.fetchRecord(record.id).then(function (response) {
+                id = record.id;
+                return $http.get(context + "/" + id).then(function (response) {
                     $scope.currentRecord = response.data;
                     self.editMode = true;
-                    $state.go("book.edit", {bid:record.id}, {reload: false}); 
-                    $scope.$broadcast("post-edit", $scope.currentRecord);
+                    $state.go("book.edit", {bid: record.id}, {reload: false});
                     return response;
                 }, responseError);
             };
@@ -138,7 +138,7 @@
              */
 
             this.fetchRecords = function () {
-                return svc.fetchRecords().then(function (response) {
+                return $http.get(context).then(function (response) {
                     $scope.records = response.data;
                     $scope.currentRecord = {};
                     self.editMode = false;
@@ -152,10 +152,20 @@
              * Muestra el template de la lista de records al finalizar la operación saveRecord
              */
             this.saveRecord = function () {
-                return svc.saveRecord($scope.currentRecord).then(function () {
-                    self.fetchRecords();
-                   $state.go("book", {}, {reload: true});                                                           
-                }, responseError);
+
+                currentRecord = $scope.currentRecord;
+
+                if (currentRecord.id) {
+                    return $http.put(context + "/" + currentRecord.id, currentRecord).then(function () {
+                        self.fetchRecords();
+                        $state.go("book", {}, {reload: true});
+                    }, responseError);
+                } else {
+                    return $http.post(context, currentRecord).then(function () {
+                        self.fetchRecords();
+                        $state.go("book", {}, {reload: true});
+                    }, responseError);
+                }
             };
 
             /*
@@ -164,12 +174,13 @@
              * Muestra el template de la lista de records al finalizar el borrado del registro.
              */
             this.deleteRecord = function (record) {
-                return svc.deleteRecord(record.id).then(function () {
+                id = record.id;
+                return $http.delete(context + "/" + id).then(function () {
                     self.fetchRecords();
                 }, responseError);
             };
 
-            editorialSvc.fetchRecords().then(function (response) {
+            $http.get(editorialContext).then(function (response) {
                 $scope.editorials = response.data;
             });
 
@@ -177,22 +188,23 @@
              * Funcion fetchRecords consulta todos los registros del módulo book en base de datos
              * para desplegarlo en el template de la lista.
              */
-            if($stateParams.bid==null)
+            if ($stateParams.bid == null)
             {
-            this.fetchRecords();
+                this.fetchRecords();
             }
 
         }]);
 
-    mod.controller("reviewsCtrl", ["$scope", "bookService",'$state', '$stateParams', function ($scope, bookSvc, $state, $stateParams) {
-            
+    mod.controller("reviewsCtrl", ["$scope", "bookService", '$state', '$stateParams', function ($scope, bookSvc, $state, $stateParams) {
+
             $scope.currentRecord = {};
             $scope.records = [];
             $scope.refName = "reviews";
             $scope.alerts = [];
-            
+
             bookSvc.fetchRecord($stateParams.bid).then(function (response) {
-                    $scope.currentRecord = response.data;});
+                $scope.currentRecord = response.data;
+            });
 
             //Alertas
             this.closeAlert = function (index) {

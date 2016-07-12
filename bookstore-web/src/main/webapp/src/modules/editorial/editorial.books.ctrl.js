@@ -1,15 +1,17 @@
 (function (ng) {
     var mod = ng.module("editorialModule");
 
-    mod.controller("editorialBooksCtrl", ["$scope", "bookService", "$modal", "editorialService",'$state', '$stateParams', function ($scope, svc, $modal, authorSvc, $state, $stateParams) {
+    mod.controller("editorialBooksCtrl", ["$scope", "$modal",'$state', '$stateParams', "$http", "editorialContext","bookContext", function ($scope, $modal, $state, $stateParams, $http, context, bookContext) {
             $scope.currentRecord = {};
             $scope.records = [];
             $scope.refName = "books";
             $scope.alerts = [];
 
             $scope.refId = $stateParams.eid;
-            authorSvc.getBooks($stateParams.eid).then(function (response) 
-            {$scope.records = response.data;}, responseError);
+            $http.get(context + "/" + $scope.refId + "/books").then(function (response)
+            {
+                $scope.records = response.data;
+            }, responseError);
 
             //Alertas
             this.closeAlert = function (index) {
@@ -39,7 +41,9 @@
             this.editMode = false;
 
             this.removeBook = function (index) {
-                authorSvc.removeBook($scope.refId, $scope.records[ index ].id).then(function () {
+                editorialId = $scope.refId;
+                bookId = $scope.records[ index ].id;
+                $http.delete(context + "/" + editorialId + "/books/" + bookId).then(function () {
                     $scope.records.splice(index, 1);
                 }, responseError);
             };
@@ -86,7 +90,7 @@
                         }],
                     resolve: {
                         items: function () {
-                            return svc.fetchRecords();
+                            return $http.get(bookContext + "/" + id);
                         },
                         currentItems: function () {
                             return $scope.records;
@@ -94,7 +98,9 @@
                     }
                 });
                 modal.result.then(function (data) {
-                    authorSvc.replaceBooks($scope.refId, data).then(function (response) {
+                    editorialId = $scope.refId;
+                    books = data;
+                    $http.put(context + "/" + editorialId + "/books", books).then(function (response) {
                         $scope.records.splice(0, $scope.records.length);
                         $scope.records.push.apply($scope.records, response.data);
                     }, responseError);

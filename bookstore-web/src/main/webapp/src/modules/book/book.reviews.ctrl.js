@@ -2,7 +2,7 @@
 
     var mod = ng.module("bookModule");
 
-    mod.controller("reviewsCtrl", ["$scope", "bookService",'$state','$stateParams', function ($scope, bookSvc, $state, $stateParams) {
+    mod.controller("reviewsCtrl", ["$scope",'$state','$stateParams',"$http", "bookContext", function ($scope, $state, $stateParams, $http, context) {
                       
             $scope.currentRecord = {};
             $scope.records = [];
