@@ -8,7 +8,7 @@
 
     var mod = ng.module("bookModule");
 
-    mod.controller("bookCtrl", ["$scope", "bookService", "editorialService", "authorService", "$modal", '$state', '$stateParams', "$http", "bookContext","editorialContext", function ($scope, svc, editorialSvc, authorSvc, $modal, $state, $stateParams, $http, context, editorialContext) {
+    mod.controller("bookCtrl", ["$scope", "$modal", '$state', '$stateParams', "$http", "bookContext","editorialContext", function ($scope, $modal, $state, $stateParams, $http, context, editorialContext) {
             //Se almacenan todas las alertas
             if ($stateParams.bid != null)
             {
@@ -194,90 +194,5 @@
             }
 
         }]);
-
-    mod.controller("reviewsCtrl", ["$scope", "bookService", '$state', '$stateParams', function ($scope, bookSvc, $state, $stateParams) {
-
-            $scope.currentRecord = {};
-            $scope.records = [];
-            $scope.refName = "reviews";
-            $scope.alerts = [];
-
-            bookSvc.fetchRecord($stateParams.bid).then(function (response) {
-                $scope.currentRecord = response.data;
-            });
-
-            //Alertas
-            this.closeAlert = function (index) {
-                $scope.alerts.splice(index, 1);
-            };
-
-            function showMessage(msg, type) {
-                var types = ["info", "danger", "warning", "success"];
-                if (types.some(function (rc) {
-                    return type === rc;
-                })) {
-                    $scope.alerts.push({type: type, msg: msg});
-                }
-            }
-
-            this.showError = function (msg) {
-                showMessage(msg, "danger");
-            };
-
-            var self = this;
-            function responseError(response) {
-                self.showError(response.data);
-            }
-
-            //Variables para el controlador
-            this.readOnly = false;
-            this.editMode = false;
-
-            //Función para encontrar un registro por ID o CID
-            function indexOf(rc) {
-                var field = rc.id !== undefined ? 'id' : 'cid';
-                for (var i in $scope.records) {
-                    if ($scope.records.hasOwnProperty(i)) {
-                        var current = $scope.records[i];
-                        if (current[field] === rc[field]) {
-                            return i;
-                        }
-                    }
-                }
-            }
-
-            this.createRecord = function () {
-                this.editMode = true;
-                $scope.currentRecord = {};
-            };
-
-            var self = this;
-            this.saveRecord = function () {
-                var rc = $scope.currentRecord;
-                if (rc.id || rc.cid) {
-                    var idx = indexOf(rc);
-                    $scope.records.splice(idx, 1, rc);
-                } else {
-                    rc.cid = -Math.floor(Math.random() * 10000);
-                    rc[$scope.parent] = {id: $scope.refId};
-                    $scope.records.push(rc);
-                }
-                this.fetchRecords();
-            };
-
-            this.fetchRecords = function () {
-                $scope.currentRecord = {};
-                this.editMode = false;
-            };
-
-            this.editRecord = function (record) {
-                $scope.currentRecord = ng.copy(record);
-                this.editMode = true;
-            };
-
-            this.deleteRecord = function (record) {
-                var idx = indexOf(record);
-                $scope.records.splice(idx, 1);
-            };
-        }]);
+    
 })(window.angular);
