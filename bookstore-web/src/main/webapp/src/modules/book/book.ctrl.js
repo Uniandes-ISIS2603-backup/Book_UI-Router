@@ -125,7 +125,7 @@
                 return $http.get(context + "/" + id).then(function (response) {
                     $scope.currentRecord = response.data;
                     self.editMode = true;
-                    $state.go("book.edit", {bid: record.id}, {reload: false});
+                    $state.go("books.bookInstance", {bid: record.id}, {reload: false});
                     return response;
                 }, responseError);
             };
@@ -158,12 +158,12 @@
                 if (currentRecord.id) {
                     return $http.put(context + "/" + currentRecord.id, currentRecord).then(function () {
                         self.fetchRecords();
-                        $state.go("book", {}, {reload: true});
+                        $state.go("books", {}, {reload: true});
                     }, responseError);
                 } else {
                     return $http.post(context, currentRecord).then(function () {
                         self.fetchRecords();
-                        $state.go("book", {}, {reload: true});
+                        $state.go("books", {}, {reload: true});
                     }, responseError);
                 }
             };

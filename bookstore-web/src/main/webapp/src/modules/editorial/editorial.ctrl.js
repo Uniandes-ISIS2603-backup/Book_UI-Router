@@ -102,7 +102,7 @@
                 return $http.get(context + "/" + id).then(function (response) {
                     $scope.currentRecord = response.data;
                     self.editMode = true;
-                    $state.go("editorial.edit", {eid: record.id}, {reload: false});
+                    $state.go("editorials.editorialInstance", {eid: record.id}, {reload: false});
                     return response;
                 }, responseError);
             };
@@ -135,14 +135,14 @@
                     return $http.put(context + "/" + currentRecord.id, currentRecord).then(function () {
                         self.fetchRecords();
                         //Transición al estado editorial
-                        $state.go("editorial", {}, {reload: true});
+                        $state.go("editorials", {}, {reload: true});
                     }, responseError);
                 } else
                 {
                     return $http.post(context, currentRecord).then(function () {
                         self.fetchRecords();
                         //Transición al estado editorial
-                        $state.go("editorial", {}, {reload: true});
+                        $state.go("editorials", {}, {reload: true});
                     }, responseError);
                 }
             };

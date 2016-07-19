@@ -14,10 +14,10 @@
 
             <!-- Collect the nav links, forms, and other content for toggling -->
             <div class="collapse navbar-collapse" id="editorial-navbar">
-                <button id="create-editorial" class="btn btn-default navbar-btn" ng-hide="ctrl.editMode" ng-click="ctrl.createRecord()" ui-sref="editorial.create"><span class="glyphicon glyphicon-plus"></span> Create</button>
+                <button id="create-editorial" class="btn btn-default navbar-btn" ng-hide="ctrl.editMode" ng-click="ctrl.createRecord()" ui-sref="editorials.create"><span class="glyphicon glyphicon-plus"></span> Create</button>
                 <button id="refresh-editorial" class="btn btn-default navbar-btn" ng-hide="ctrl.editMode" ng-click="ctrl.fetchRecords()"><span class="glyphicon glyphicon-refresh"></span> Refresh</button>
                 <button id="save-editorial" type="submit" form="editorial-form" class="btn btn-default navbar-btn" ng-show="ctrl.editMode"><span class="glyphicon glyphicon-save"></span> Save</button>
-                <button id="cancel-editorial" type="button" form="editorial-form" class="btn btn-default navbar-btn" ng-show="ctrl.editMode" ng-click="form.$setPristine(); ctrl.fetchRecords();" ui-sref="editorial"><span class="glyphicon glyphicon-remove"></span> Cancel</button>
+                <button id="cancel-editorial" type="button" form="editorial-form" class="btn btn-default navbar-btn" ng-show="ctrl.editMode" ng-click="form.$setPristine(); ctrl.fetchRecords();" ui-sref="editorials"><span class="glyphicon glyphicon-remove"></span> Cancel</button>
             </div>
         </div>
     </nav>

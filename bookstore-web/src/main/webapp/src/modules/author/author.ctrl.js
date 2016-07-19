@@ -80,7 +80,7 @@
                 return $http.get(context + "/" + id).then(function (response) {
                     $scope.currentRecord = response.data;
                     self.editMode = true;
-                    $state.go("author.edit", {aid: record.id}, {reload: false});
+                    $state.go("authors.authorInstance", {aid: record.id}, {reload: false});
                     return response;
                 }, responseError);
             };
@@ -103,14 +103,14 @@
                             .then(function () {
                                 self.fetchRecords();
                                 //Transición al estado author
-                                $state.go("author", {}, {reload: true});
+                                $state.go("authors", {}, {reload: true});
                             }, responseError);
                 } else
                 {
                     return $http.post(context, currentRecord).then(function () {
                         self.fetchRecords();
                         //Transición al estado author
-                        $state.go("author", {}, {reload: true});
+                        $state.go("authors", {}, {reload: true});
                     }, responseError);
                 }
             };
