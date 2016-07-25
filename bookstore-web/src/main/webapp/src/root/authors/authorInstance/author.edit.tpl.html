@@ -1,0 +1,36 @@
+<div class="col-md-6 well">
+    <form novalidate name="form" id="author-form" role="form" ng-submit="form.$valid && ctrl.saveRecord()">
+        <alert ng-messages="form.$error" type="danger" close="" ng-hide="!form.$error.required">
+                <div ng-message="required">
+                    Please, Fill the required fields!
+                </div>
+            </alert>
+        <fieldset>
+            <input id="id" class="form-control" type="hidden" ng-model="currentRecord.id"/>
+            <div class="form-group col-md-12" ng-class="{'has-success': form.name.$valid && form.name.$dirty, 'has-error': form.name.$invalid && (form.name.$dirty || form.$submitted)}" >
+                <label for="name" class="col-md-2 control-label">Name</label>
+                <div class="col-md-10">
+                    <input id="name" name="name" class="form-control" type="text" ng-model="currentRecord.name" required />
+                </div>
+            </div>
+            <div class="form-group col-md-12" ng-class="{'has-success': !form.name.$error.required && form.name.$dirty, 'has-error': form.name.$error.required && (form.name.$dirty || form.$submitted)}">
+                <label for="birthDate" class="col-md-2 control-label">Birth Date</label>
+                <div class="col-md-10">
+                    <p class="input-group">
+                        <input type="text" id="birthDate" name="birthDate" class="form-control" ng-model="currentRecord.birthDate" ng-required="model.required" datepicker-popup is-open="opened" readonly required />
+                        <span class="input-group-btn">
+                            <button type="button" id="birthDate-datepicker" class="btn btn-default" ng-click="open($event)"><span class="glyphicon glyphicon-calendar"></span></button>
+                        </span>
+                    </p>
+                </div>
+            </div>
+        </fieldset>
+    </form>
+</div>
+
+<div id="childs" class="col-md-10">
+    <ul class="nav nav-tabs">
+        <li><a ui-sref="authors.authorInstance.books">Books</a></li>
+    </ul>
+    <div ui-view></div>
+</div> 

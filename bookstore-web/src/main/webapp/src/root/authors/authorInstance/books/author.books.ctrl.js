@@ -1,16 +1,14 @@
 (function (ng) {
+    var mod = ng.module("authorModule");
 
-    var mod = ng.module("bookModule");
-
-    mod.controller("authorsCtrl", ["$scope", "$modal",'$state', '$stateParams',"$http", "bookContext", "authorContext", function ($scope, $modal, $state, $stateParams, $http, bookContext, authorContext) {
+    mod.controller("booksCtrl", ["$scope", "$modal",'$state', '$stateParams',"$http", "authorContext", "bookContext", function ($scope, $modal, $state, $stateParams, $http, context, bookContext) {
             $scope.currentRecord = {};
             $scope.records = [];
-            $scope.refName = "authors";
+            $scope.refName = "books";
             $scope.alerts = [];
             
-            $scope.refId = $stateParams.bid;
-            id = $scope.refId;
-            $http.get(bookContext + "/" + id + "/authors").then(function (response) 
+            $scope.refId = $stateParams.aid;
+            $http.get(context + "/" + $scope.refId + "/books").then(function (response) 
             {$scope.records = response.data;}, responseError);
 
             //Alertas
@@ -40,10 +38,10 @@
             this.readOnly = false;
             this.editMode = false;
 
-            this.removeAuthor = function (index) {
-                bookId = $scope.refId;
-                authorId = $scope.records[ index ].id;
-                $http.delete(bookContext + "/" + bookId + "/authors/" + authorId).then(function () {
+            this.removeBook = function (index) {
+                authorId = $scope.refId;
+                bookId = $scope.records[ index ].id;
+                $http.delete(context + "/" + authorId + "/books/" + bookId).then(function () {
                     $scope.records.splice(index, 1);
                 }, responseError);
             };
@@ -51,7 +49,7 @@
             this.showList = function () {
                 var modal = $modal.open({
                     animation: true,
-                    templateUrl: "src/modules/book/authorModal.tpl.html",
+                    templateUrl: "src/modules/author/bookModal.tpl.html",
                     controller: ["$scope", "$modalInstance", "items", "currentItems", function ($scope, $modalInstance, items, currentItems) {
                             $scope.records = items.data;
                             $scope.allChecked = false;
@@ -90,7 +88,7 @@
                         }],
                     resolve: {
                         items: function () {
-                            return $http.get(authorContext);
+                            return $http.get(bookContext);
                         },
                         currentItems: function () {
                             return $scope.records;
@@ -98,13 +96,14 @@
                     }
                 });
                 modal.result.then(function (data) {
-                    bookId = $scope.refId;
-                    authors = data;
-                    $http.put(bookContext + "/" + bookId + "/authors", authors).then(function (response) {
+                    authorId = $scope.refId;
+                    books = data;
+                    $http.put(context + "/" + authorId + "/books", books).then(function (response) {
                         $scope.records.splice(0, $scope.records.length);
                         $scope.records.push.apply($scope.records, response.data);
                     }, responseError);
                 });
             };
         }]);
+
 })(window.angular);

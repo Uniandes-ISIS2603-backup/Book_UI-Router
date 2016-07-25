@@ -1,18 +1,12 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
-
 (function (ng) {
 
-    var mod = ng.module("bookModule");
+    var mod = ng.module("editorialModule");
 
-    mod.controller("bookCtrl", ["$scope", "$modal", '$state', '$stateParams', "$http", "bookContext","editorialContext", function ($scope, $modal, $state, $stateParams, $http, context, editorialContext) {
-            //Se almacenan todas las alertas
-            if ($stateParams.bid != null)
+    mod.controller("editorialCtrl", ["$scope", '$state', '$stateParams', "$http", "editorialContext", function ($scope, $state, $stateParams, $http, context) {
+
+            if ($stateParams.eid != null)
             {
-                id = $stateParams.bid;
+                id = $stateParams.eid;
                 $http.get(context + "/" + id).then(function (response) {
                     $scope.currentRecord = response.data;
                 });
@@ -21,22 +15,7 @@
                 $scope.alerts = [];
                 $scope.currentRecord = {
                     id: undefined /*Tipo Long. El valor se asigna en el backend*/,
-                    name: '' /*Tipo String*/,
-                    description: '' /*Tipo String*/,
-                    isbn: '' /*Tipo String*/,
-                    image: '' /*Tipo String*/,
-                    editorial: {} /*Objeto que representa instancia de Editorial*/,
-                    reviews: [{/*Colección de registros de Review*/
-                            id: undefined /*Tipo Long. El backend asigna el valor*/,
-                            name: '' /*Tipo String*/,
-                            source: '' /*Tipo String*/,
-                            description: '' /*Tipo String*/
-                        }, {
-                            id: undefined /*Tipo Long. El backend asigna el valor*/,
-                            name: '' /*Tipo String*/,
-                            source: '' /*Tipo String*/,
-                            description: '' /*Tipo String*/
-                        }] /*Colección de registros de Review*/
+                    name: '' /*Tipo String*/
                 };
                 $scope.records = [];
             }
@@ -61,7 +40,6 @@
                 $scope.alerts.splice(index, 1);
             };
 
-            // Función showMessage: Recibe el mensaje en String y su tipo con el fin de almacenarlo en el array $scope.alerts.
             function showMessage(msg, type) {
                 var types = ["info", "danger", "warning", "success"];
                 if (types.some(function (rc) {
@@ -83,21 +61,20 @@
             function responseError(response) {
                 self.showError(response.data);
             }
-
             //Variables para el controlador
             this.readOnly = false;
             this.editMode = false;
+
 
             this.changeTab = function (tab) {
                 $scope.tab = tab;
             };
 
             //Ejemplo alerta
-            if ($stateParams.bid == null)
+            if ($stateParams.eid == null)
             {
-                showMessage("Bienvenido!, Esto es un ejemplo para mostrar un mensaje de información", "info");
+                showMessage("Bienvenido!, Esto es un ejemplo para mostrar un mensaje exitoso", "success");
             }
-
 
             /*
              * Funcion createRecord emite un evento a los $scope hijos del controlador por medio de la
@@ -125,14 +102,14 @@
                 return $http.get(context + "/" + id).then(function (response) {
                     $scope.currentRecord = response.data;
                     self.editMode = true;
-                    $state.go("books.bookInstance", {bid: record.id}, {reload: false});
+                    $state.go("editorials.editorialInstance", {eid: record.id}, {reload: false});
                     return response;
                 }, responseError);
             };
 
             /*
              * Funcion fetchRecords consulta el servicio svc.fetchRecords con el fin de consultar
-             * todos los registros del modulo book.
+             * todos los registros del modulo editorial.
              * Guarda los registros en la variable $scope.records
              * Muestra el template de la lista de records.
              */
@@ -152,18 +129,20 @@
              * Muestra el template de la lista de records al finalizar la operación saveRecord
              */
             this.saveRecord = function () {
-
-                currentRecord = $scope.currentRecord;
-
-                if (currentRecord.id) {
+                currentRecord= $scope.currentRecord;
+                if ($stateParams.eid)
+                {
                     return $http.put(context + "/" + currentRecord.id, currentRecord).then(function () {
                         self.fetchRecords();
-                        $state.go("books", {}, {reload: true});
+                        //Transición al estado editorial
+                        $state.go("editorials", {}, {reload: true});
                     }, responseError);
-                } else {
+                } else
+                {
                     return $http.post(context, currentRecord).then(function () {
                         self.fetchRecords();
-                        $state.go("books", {}, {reload: true});
+                        //Transición al estado editorial
+                        $state.go("editorials", {}, {reload: true});
                     }, responseError);
                 }
             };
@@ -180,19 +159,14 @@
                 }, responseError);
             };
 
-            $http.get(editorialContext).then(function (response) {
-                $scope.editorials = response.data;
-            });
-
             /*
-             * Funcion fetchRecords consulta todos los registros del módulo book en base de datos
+             * Funcion fetchRecords consulta todos los registros del módulo editorial en base de datos
              * para desplegarlo en el template de la lista.
              */
-            if ($stateParams.bid == null)
+            if ($stateParams.eid == null)
             {
                 this.fetchRecords();
             }
-
         }]);
-    
+
 })(window.angular);
