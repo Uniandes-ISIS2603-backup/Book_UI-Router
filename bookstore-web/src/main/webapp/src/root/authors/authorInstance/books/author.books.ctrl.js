@@ -1,7 +1,7 @@
 (function (ng) {
-    var mod = ng.module("authorModule");
+    var mod = ng.module("authorsModule");
 
-    mod.controller("booksCtrl", ["$scope", "$modal",'$state', '$stateParams',"$http", "authorContext", "bookContext", function ($scope, $modal, $state, $stateParams, $http, context, bookContext) {
+    mod.controller("booksCtrl", ["$scope", "$modal",'$state', '$stateParams',"$http", "authorsContext", "bookContext", function ($scope, $modal, $state, $stateParams, $http, context, bookContext) {
             $scope.currentRecord = {};
             $scope.records = [];
             $scope.refName = "books";

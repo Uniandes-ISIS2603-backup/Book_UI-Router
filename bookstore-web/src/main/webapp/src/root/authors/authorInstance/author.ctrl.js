@@ -1,7 +1,7 @@
 (function (ng) {
-    var mod = ng.module("authorModule");
+    var mod = ng.module("authorsModule");
 
-    mod.controller("authorCtrl", ["$scope", '$state', '$stateParams', '$http', 'authorContext', function ($scope, $state, $stateParams, $http, context) {
+    mod.controller("authorsCtrl", ["$scope", '$state', '$stateParams', '$http', 'authorsContext', function ($scope, $state, $stateParams, $http, context) {
 
             if ($stateParams.aid != null)
             {
