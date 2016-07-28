@@ -83,26 +83,26 @@
                         url: '/authors',
                         controller: "authorsCtrl",
                         controllerAs: "ctrl",
-                        templateUrl: "src/root/authors/authors.tpl.html"
+                        templateUrl: "src/root/authors/authors.html"
                     })
                     .state('authors.create', {
                         url: '/create',
                         controller: "authorsCtrl",
                         controllerAs: "ctrl",
-                        templateUrl: "src/root/authors/create/author.create.tpl.html"
+                        templateUrl: "src/root/authors/create/create.html"
                     })
 
                     .state('authors.authorInstance', {
                         url: '/:aid',
                         controller: "authorsCtrl",
                         controllerAs: "ctrl",
-                        templateUrl: "src/root/authors/authorInstance/author.edit.tpl.html"
+                        templateUrl: "src/root/authors/authorInstance/authorInstance.html"
                     })
                     .state('authors.authorInstance.books', {
                         url: '/books',
                         controller: "booksCtrl",
                         controllerAs: "ctrl",
-                        templateUrl: "src/root/authors/authorInstance/books/author.books.html"
+                        templateUrl: "src/root/authors/authorInstance/books/books.html"
                     })
                     ;
         }]);
