@@ -6,9 +6,9 @@
 
 (function (ng) {
 
-    var mod = ng.module("bookModule");
+    var mod = ng.module("booksModule");
 
-    mod.controller("bookCtrl", ["$scope", "$modal", '$state', '$stateParams', "$http", "bookContext","editorialContext", function ($scope, $modal, $state, $stateParams, $http, context, editorialContext) {
+    mod.controller("booksCtrl", ["$scope", "$modal", '$state', '$stateParams', "$http", "bookContext","editorialContext", function ($scope, $modal, $state, $stateParams, $http, context, editorialContext) {
             //Se almacenan todas las alertas
             if ($stateParams.bid != null)
             {

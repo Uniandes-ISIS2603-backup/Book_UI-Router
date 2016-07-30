@@ -1,8 +1,8 @@
 (function (ng) {
 
-    var mod = ng.module("prizeModule");
+    var mod = ng.module("prizesModule");
 
-    mod.controller("prizeCtrl", ["$scope", '$state', '$stateParams', "$http", "prizeContext",
+    mod.controller("prizesCtrl", ["$scope", '$state', '$stateParams', "$http", "prizeContext",
         function ($scope, $state, $stateParams, $http, context) {
 
             $scope.refId = $stateParams.bid;

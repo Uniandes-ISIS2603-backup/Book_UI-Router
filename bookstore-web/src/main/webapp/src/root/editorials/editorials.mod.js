@@ -6,7 +6,7 @@
 
 (function (ng) {
 
-    var mod = ng.module("editorialModule", ["ui.bootstrap", "ngMessages"]);
+    var mod = ng.module("editorialsModule", ["ui.bootstrap", "ngMessages"]);
 
     mod.constant("editorialContext", "api/editorials");
 

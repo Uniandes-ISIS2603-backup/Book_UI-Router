@@ -1,8 +1,8 @@
 (function (ng) {
 
-    var mod = ng.module("editorialModule");
+    var mod = ng.module("editorialsModule");
 
-    mod.controller("editorialCtrl", ["$scope", '$state', '$stateParams', "$http", "editorialContext", function ($scope, $state, $stateParams, $http, context) {
+    mod.controller("editorialsCtrl", ["$scope", '$state', '$stateParams', "$http", "editorialContext", function ($scope, $state, $stateParams, $http, context) {
 
             if ($stateParams.eid != null)
             {

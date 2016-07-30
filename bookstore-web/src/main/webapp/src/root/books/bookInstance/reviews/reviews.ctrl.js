@@ -1,6 +1,6 @@
 (function (ng) {
 
-    var mod = ng.module("bookModule");
+    var mod = ng.module("booksModule");
 
     mod.controller("reviewsCtrl", ["$scope",'$state','$stateParams',"$http", "bookContext", function ($scope, $state, $stateParams, $http, context) {
                       

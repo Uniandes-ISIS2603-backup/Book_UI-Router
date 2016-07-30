@@ -2,11 +2,11 @@
 
     var mod = ng.module("mainApp", [
         "ui.router",
-        "bookModule",
-        "editorialModule",
+        "booksModule",
+        "editorialsModule",
         "authorsModule",
-        "reviewModule",
-        "prizeModule",
+        "reviewsModule",
+        "prizesModule",
         "ngMessages"
     ]);
 
@@ -15,68 +15,68 @@
         }]);
 
     mod.config(['$stateProvider', '$urlRouterProvider', function ($stateProvider, $urlRouterProvider) {
-            $urlRouterProvider.otherwise("/book");
+            $urlRouterProvider.otherwise("/books");
             $stateProvider
                     .state('books', {
                         url: '/books',
-                        controller: "bookCtrl",
+                        controller: "booksCtrl",
                         controllerAs: "ctrl",
-                        templateUrl: "src/root/books/book.tpl.html"
+                        templateUrl: "src/root/books/books.html"
                     })
                     .state('books.create', {
                         url: '/create',
-                        controller: "bookCtrl",
+                        controller: "booksCtrl",
                         controllerAs: "ctrl",
-                        templateUrl: "src/root/books/create/book.create.tpl.html"
+                        templateUrl: "src/root/books/create/create.html"
                     })
                     .state('books.bookInstance', {
                         url: '/:bid',
-                        controller: "bookCtrl",
+                        controller: "booksCtrl",
                         controllerAs: "ctrl",
-                        templateUrl: "src/root/books/bookInstance/book.edit.tpl.html"
+                        templateUrl: "src/root/books/bookInstance/bookInstance.html"
                     })
                     .state('books.bookInstance.reviews', {
                         url: '/reviews',
                         controller: "reviewsCtrl",
                         controllerAs: "ctrl",
-                        templateUrl: "src/root/books/bookInstance/reviews/review.tpl.html"
+                        templateUrl: "src/root/books/bookInstance/reviews/reviews.html"
                     })
                     .state('books.bookInstance.prizes', {
                         url: '/prizes',
-                        controller: "prizeCtrl",
+                        controller: "prizesCtrl",
                         controllerAs: "ctrl",
-                        templateUrl: "src/root/books/bookInstance/prizes/prize.tpl.html"
+                        templateUrl: "src/root/books/bookInstance/prizes/prizes.html"
                     })
                     .state('books.bookInstance.authors', {
                         url: '/authors',
                         controller: "authorsCtrl",
                         controllerAs: "ctrl",
-                        templateUrl: "src/root/books/bookInstance/authors/book.authors.html"
+                        templateUrl: "src/root/books/bookInstance/authors/authors.html"
                     })
                     .state('editorials', {
                         url: '/editorials',
-                        controller: "editorialCtrl",
+                        controller: "editorialsCtrl",
                         controllerAs: "ctrl",
-                        templateUrl: "src/root/editorials/editorial.tpl.html"
+                        templateUrl: "src/root/editorials/editorials.html"
                     })
                     .state('editorials.create', {
                         url: '/create',
-                        controller: "editorialCtrl",
+                        controller: "editorialsCtrl",
                         controllerAs: "ctrl",
-                        templateUrl: "src/root/editorials/create/editorial.create.tpl.html"
+                        templateUrl: "src/root/editorials/create/create.html"
                     })
 
                     .state('editorials.editorialInstance', {
                         url: '/:eid',
-                        controller: "editorialCtrl",
+                        controller: "editorialsCtrl",
                         controllerAs: "ctrl",
-                        templateUrl: "src/root/editorials/editorialInstance/editorial.edit.tpl.html"
+                        templateUrl: "src/root/editorials/editorialInstance/editorialInstance.html"
                     })
                     .state('editorials.editorialInstance.books', {
                         url: '/books',
-                        controller: "editorialBooksCtrl",
+                        controller: "editorialsBooksCtrl",
                         controllerAs: "ctrl",
-                        templateUrl: "src/root/editorials/editorialInstance/books/editorial.books.html"
+                        templateUrl: "src/root/editorials/editorialInstance/books/books.html"
                     })
 
                     .state('authors', {
@@ -100,7 +100,7 @@
                     })
                     .state('authors.authorInstance.books', {
                         url: '/books',
-                        controller: "booksCtrl",
+                        controller: "authorBooksCtrl",
                         controllerAs: "ctrl",
                         templateUrl: "src/root/authors/authorInstance/books/books.html"
                     })

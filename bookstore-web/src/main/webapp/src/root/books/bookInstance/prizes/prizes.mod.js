@@ -3,12 +3,9 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
+(function (ng) {
+    var mod = ng.module("prizesModule", ["ui.bootstrap", "ngMessages"]);
+    mod.constant("prizeContext", "api/books");
 
-(function(ng){
-    
-    var mod = ng.module("reviewModule", ["ui.bootstrap"]);
-    
-    mod.constant("reviewContext", "api/reviews");
-    
 })(window.angular);
 
