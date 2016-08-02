@@ -8,7 +8,7 @@
 
     var mod = ng.module("booksModule");
 
-    mod.controller("bookCtrl", ["$scope", "$modal", '$state', '$stateParams', "$http", "bookContext","editorialContext", function ($scope, $modal, $state, $stateParams, $http, context, editorialContext) {
+    mod.controller("createBookCtrl", ["$scope", "$modal", '$state', '$stateParams', "$http", "bookContext","editorialContext", function ($scope, $modal, $state, $stateParams, $http, context, editorialContext) {
             //Se almacenan todas las alertas
             if ($stateParams.bid != null)
             {

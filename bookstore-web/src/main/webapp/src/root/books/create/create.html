@@ -52,29 +52,3 @@
         </fieldset>
     </form>
 </div>
-
-
-<div id="childs" ng-show="ctrl.editMode" class="col-md-6">
-    <ul class="nav nav-tabs">
-        <li ng-show="currentRecord.id" role="presentation" ng-class="{active: tab === 'authors'}">
-            <a href ng-click="ctrl.changeTab('authors')">Authors</a>
-        </li>
-        <li ng-show="currentRecord.id" role="presentation" ng-class="{active: tab === 'prizes'}">
-            <a href ng-click="ctrl.changeTab('prizes')">Prizes</a>
-        </li>
-        <li role="presentation" ng-class="{active: tab === 'reviews'}">
-            <a href ng-click="ctrl.changeTab('reviews')">Reviews</a>
-        </li>
-    </ul>
-    <div ng-show="tab === 'reviews'">
-        <div ng-controller="reviewsCtrl as ctrl" ng-include="'src/modules/review/review.tpl.html'"></div>
-    </div>
-    <div ng-show="tab === 'prizes'">
-        <div ng-controller="prizeCtrl as ctrl" ng-include="'src/modules/prize/prize.tpl.html'">
-        </div>
-    </div>
-    <div ng-show="tab === 'authors'">
-        <div ng-include="'src/modules/book/book.authors.html'">
-        </div>
-    </div>
-</div>

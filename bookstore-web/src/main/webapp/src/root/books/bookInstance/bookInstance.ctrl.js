@@ -6,7 +6,7 @@
 
 (function (ng) {
 
-    var mod = ng.module("bookInstanceModule");
+    var mod = ng.module("booksModule");
 
     mod.controller("bookInstanceCtrl", ["$scope", "$modal", '$state', '$stateParams', "$http", "bookContext","editorialContext", function ($scope, $modal, $state, $stateParams, $http, context, editorialContext) {
             //Se almacenan todas las alertas

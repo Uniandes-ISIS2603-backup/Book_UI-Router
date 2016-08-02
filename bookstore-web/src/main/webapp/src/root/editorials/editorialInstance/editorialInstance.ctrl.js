@@ -2,7 +2,7 @@
 
     var mod = ng.module("editorialsModule");
 
-    mod.controller("editorialsCtrl", ["$scope", '$state', '$stateParams', "$http", "editorialContext", function ($scope, $state, $stateParams, $http, context) {
+    mod.controller("editorialInstanceCtrl", ["$scope", '$state', '$stateParams', "$http", "editorialContext", function ($scope, $state, $stateParams, $http, context) {
 
             if ($stateParams.eid != null)
             {

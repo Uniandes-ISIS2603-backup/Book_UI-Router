@@ -25,13 +25,13 @@
                     })
                     .state('books.create', {
                         url: '/create',
-                        controller: "booksCtrl",
+                        controller: "createBookCtrl",
                         controllerAs: "ctrl",
                         templateUrl: "src/root/books/create/create.html"
                     })
                     .state('books.bookInstance', {
                         url: '/:bid',
-                        controller: "booksCtrl",
+                        controller: "bookInstanceCtrl",
                         controllerAs: "ctrl",
                         templateUrl: "src/root/books/bookInstance/bookInstance.html"
                     })
@@ -49,7 +49,7 @@
                     })
                     .state('books.bookInstance.authors', {
                         url: '/authors',
-                        controller: "authorsCtrl",
+                        controller: "bookAuthorsCtrl",
                         controllerAs: "ctrl",
                         templateUrl: "src/root/books/bookInstance/authors/authors.html"
                     })
@@ -61,14 +61,14 @@
                     })
                     .state('editorials.create', {
                         url: '/create',
-                        controller: "editorialsCtrl",
+                        controller: "createEditorialCtrl",
                         controllerAs: "ctrl",
                         templateUrl: "src/root/editorials/create/create.html"
                     })
 
                     .state('editorials.editorialInstance', {
                         url: '/:eid',
-                        controller: "editorialsCtrl",
+                        controller: "editorialInstanceCtrl",
                         controllerAs: "ctrl",
                         templateUrl: "src/root/editorials/editorialInstance/editorialInstance.html"
                     })
@@ -87,7 +87,7 @@
                     })
                     .state('authors.create', {
                         url: '/create',
-                        controller: "authorsCtrl",
+                        controller: "createAuthorCtrl",
                         controllerAs: "ctrl",
                         templateUrl: "src/root/authors/create/create.html"
                     })

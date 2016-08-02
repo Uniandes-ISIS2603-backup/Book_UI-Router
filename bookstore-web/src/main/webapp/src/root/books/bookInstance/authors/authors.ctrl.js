@@ -2,7 +2,7 @@
 
     var mod = ng.module("booksModule");
 
-    mod.controller("authorsCtrl", ["$scope", "$modal",'$state', '$stateParams',"$http", "bookContext", "authorContext", function ($scope, $modal, $state, $stateParams, $http, bookContext, authorContext) {
+    mod.controller("bookAuthorsCtrl", ["$scope", "$modal",'$state', '$stateParams',"$http", "bookContext", "authorContext", function ($scope, $modal, $state, $stateParams, $http, bookContext, authorContext) {
             $scope.currentRecord = {};
             $scope.records = [];
             $scope.refName = "authors";
