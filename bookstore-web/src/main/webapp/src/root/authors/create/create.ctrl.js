@@ -3,22 +3,14 @@
 
     mod.controller("createAuthorCtrl", ["$scope", '$state', '$stateParams', '$http', 'authorsContext', function ($scope, $state, $stateParams, $http, context) {
 
-            if ($stateParams.aid != null)
-            {
-                id = $stateParams.aid;
-                $http.get(context + "/" + id).then(function (response) {
-                    $scope.currentRecord = response.data;
-                });
-            } else
-            {
-                $scope.currentRecord = {
-                    id: undefined /*Tipo Long. El valor se asigna en el backend*/,
-                    name: '' /*Tipo String*/,
-                    birthDate: '' /*Tipo String*/
-                };
-                $scope.records = [];
-                $scope.alerts = [];
-            }
+            $scope.currentRecord = {
+                id: undefined /*Tipo Long. El valor se asigna en el backend*/,
+                name: '' /*Tipo String*/,
+                birthDate: '' /*Tipo String*/
+            };
+            $scope.records = [];
+            $scope.alerts = [];
+
 
             $scope.today = function () {
                 $scope.value = new Date();
@@ -63,11 +55,7 @@
             this.readOnly = false;
             this.editMode = false;
 
-            //Ejemplo alerta
-            if ($stateParams.aid == null)
-            {
-                showMessage("Bienvenido!, Esto es un ejemplo para mostrar un mensaje de atención", "warning");
-            }
+            showMessage("Bienvenido!, Esto es un ejemplo para mostrar un mensaje de atención", "warning");
 
             this.createRecord = function () {
                 this.editMode = true;
@@ -120,11 +108,7 @@
                     self.fetchRecords();
                 }, responseError);
             };
-
-            if ($stateParams.aid == null)
-            {
-                this.fetchRecords();
-            }
+            this.fetchRecords();
 
         }]);
 
