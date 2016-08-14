@@ -3,8 +3,7 @@
     var mod = ng.module("booksModule");
 
     mod.controller("bookAuthorsCtrl", ["$scope", "$modal",'$state', '$stateParams',"$http", function ($scope, $modal, $state, $stateParams, $http) {
-          
-            console.log('asd');
+          console.log('asdddd');
             $scope.currentRecord = {};
             $scope.records = [];
             $scope.refName = "authors";
@@ -43,6 +42,7 @@
             this.editMode = false;
 
             this.removeAuthor = function (index) {
+                console.log("borrarAutor "+index);
                 bookId = $scope.refId;
                 authorId = $scope.records[ index ].id;
                 $http.delete("api/books/" + bookId + "/authors/" + authorId).then(function () {
@@ -53,7 +53,7 @@
             this.showList = function () {
                 var modal = $modal.open({
                     animation: true,
-                    templateUrl: "src/modules/book/authorModal.tpl.html",
+                    templateUrl: "src/root/books/bookInstance/authors/authorsModal.html",
                     controller: ["$scope", "$modalInstance", "items", "currentItems", function ($scope, $modalInstance, items, currentItems) {
                             $scope.records = items.data;
                             $scope.allChecked = false;
