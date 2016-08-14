@@ -49,7 +49,7 @@
             this.showList = function () {
                 var modal = $modal.open({
                     animation: true,
-                    templateUrl: "src/modules/author/bookModal.tpl.html",
+                    templateUrl: "src/root/authors/authorInstance/books/booksModal.html",
                     controller: ["$scope", "$modalInstance", "items", "currentItems", function ($scope, $modalInstance, items, currentItems) {
                             $scope.records = items.data;
                             $scope.allChecked = false;

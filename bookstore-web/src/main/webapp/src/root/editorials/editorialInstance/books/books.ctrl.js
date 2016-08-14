@@ -51,7 +51,7 @@
             this.showList = function () {
                 var modal = $modal.open({
                     animation: true,
-                    templateUrl: "src/modules/editorial/bookModal.tpl.html",
+                    templateUrl: "src/root/editorials/editorialInstance/books/booksModal.html",
                     controller: ["$scope", "$modalInstance", "items", "currentItems", function ($scope, $modalInstance, items, currentItems) {
                             $scope.records = items.data;
                             $scope.allChecked = false;
