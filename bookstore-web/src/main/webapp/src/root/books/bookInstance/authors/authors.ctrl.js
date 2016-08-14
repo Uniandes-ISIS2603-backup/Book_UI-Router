@@ -3,7 +3,6 @@
     var mod = ng.module("booksModule");
 
     mod.controller("bookAuthorsCtrl", ["$scope", "$modal",'$state', '$stateParams',"$http", function ($scope, $modal, $state, $stateParams, $http) {
-          console.log('asdddd');
             $scope.currentRecord = {};
             $scope.records = [];
             $scope.refName = "authors";
@@ -11,7 +10,8 @@
             
             $scope.refId = $stateParams.bid;
             id = $scope.refId;
-            $http.get("api/books/" + id + "/authors").then(function (response) 
+            console.log(id);
+            $http.get("api/books/" + id + "/authors").then(function (response)
             {$scope.records = response.data;}, responseError);
 
             //Alertas

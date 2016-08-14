@@ -168,6 +168,6 @@ public class EditorialResource {
     @DELETE
     @Path("{editorialId: \\d+}/books/{bookId: \\d+}")
     public void removeBooks(@PathParam("editorialId") Long editorialId, @PathParam("bookId") Long bookId) {
-        editorialLogic.removeBook(editorialId, bookId);
+        editorialLogic.removeBook(bookId,editorialId);
     }
 }
