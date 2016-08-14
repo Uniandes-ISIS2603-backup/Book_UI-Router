@@ -9,9 +9,7 @@
 
             $scope.refId = $stateParams.eid;
             $http.get(context + "/" + $scope.refId + "/books").then(function (response)
-            {
-                $scope.records = response.data;
-            }, responseError);
+            {$scope.records = response.data;}, responseError);
 
             //Alertas
             this.closeAlert = function (index) {
@@ -90,7 +88,7 @@
                         }],
                     resolve: {
                         items: function () {
-                            return $http.get(bookContext + "/" + id);
+                            return $http.get(bookContext);
                         },
                         currentItems: function () {
                             return $scope.records;
