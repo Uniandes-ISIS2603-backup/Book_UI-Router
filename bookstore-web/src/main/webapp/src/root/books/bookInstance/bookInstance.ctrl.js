@@ -10,6 +10,8 @@
 
     mod.controller("bookInstanceCtrl", ["$scope", "$modal", '$state', '$stateParams', "$http", "bookContext","editorialContext", function ($scope, $modal, $state, $stateParams, $http, context, editorialContext) {
 
+           document.getElementById('instance').scrollIntoView();
+
         id = $stateParams.bid;
         $http.get(context + "/" + id).then(function (response) {
             $scope.currentRecord = response.data;

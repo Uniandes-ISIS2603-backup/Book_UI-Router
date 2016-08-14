@@ -8,16 +8,10 @@
 
     var mod = ng.module("booksModule");
 
-    mod.controller("booksCtrl", ["$scope", "$modal", '$state', '$stateParams', "$http", "bookContext","editorialContext", function ($scope, $modal, $state, $stateParams, $http, context, editorialContext) {
+    mod.controller("booksCtrl", ["$scope", '$state', '$stateParams', "$http", "bookContext","editorialContext", function ($scope, $state, $stateParams, $http, context, editorialContext) {
+            
             //Se almacenan todas las alertas
-            if ($stateParams.bid != null)
-            {
-                id = $stateParams.bid;
-                $http.get(context + "/" + id).then(function (response) {
-                    $scope.currentRecord = response.data;
-                });
-            } else
-            {
+            
                 $scope.alerts = [];
                 $scope.currentRecord = {
                     id: undefined /*Tipo Long. El valor se asigna en el backend*/,
@@ -39,7 +33,7 @@
                         }] /*Colección de registros de Review*/
                 };
                 $scope.records = [];
-            }
+            
 
             $scope.today = function () {
                 $scope.value = new Date();
@@ -93,10 +87,8 @@
             };
 
             //Ejemplo alerta
-            if ($stateParams.bid == null)
-            {
                 showMessage("Bienvenido!, Esto es un ejemplo para mostrar un mensaje de información", "info");
-            }
+            
 
 
             /*
@@ -188,10 +180,8 @@
              * Funcion fetchRecords consulta todos los registros del módulo book en base de datos
              * para desplegarlo en el template de la lista.
              */
-            if ($stateParams.bid == null)
-            {
                 this.fetchRecords();
-            }
+            
 
         }]);
     
